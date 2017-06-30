@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -12,11 +14,20 @@ db = SQLAlchemy()
 # noinspection PyTypeChecker
 def create_api(flask_app):
     from flask_rest_jsonapi import Api
+    from app.schemas import RainfallTotalList, RainfallTotalDetail
     from app.schemas import CompostPileList, CompostPileDetail, CompostPileRelationship
     from app.schemas import CompostPileHistoryList, CompostPileHistoryDetail, CompostPileHistoryRelationship
 
     api = Api(flask_app)
 
+    # RAINFALL TOTALS ROUTES
+    api.route(RainfallTotalList, 'rainfall_total_list',
+              '/rainfalltotals')
+
+    api.route(RainfallTotalDetail, 'rainfall_total_detail',
+              '/rainfalltotals/<int:id>')
+
+    # COMPOST PILE ROUTES
     api.route(CompostPileList, 'compost_pile_list',
               '/compostpiles')
 
@@ -38,9 +49,9 @@ def create_api(flask_app):
               '/compostpilehistories/<int:id>/relationships/compost_pile')
 
 
-def create_flask_app(config_name):
+def create_flask_app(environment_config):
     flask_app = Flask(__name__)
-    flask_app.config.from_object(app_config[config_name])
+    flask_app.config.from_object(app_config[environment_config])
     flask_app.config.from_pyfile('../instance/config.py')
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -49,9 +60,12 @@ def create_flask_app(config_name):
     return flask_app
 
 
-def create_app(config_name):
-    app = create_flask_app(config_name)
+def create_app(environment_config):
+    app = create_flask_app(environment_config)
     create_api(app)
     db.init_app(app)
 
     return app
+
+config_name = os.getenv('APP_SETTINGS')
+application = create_app(config_name)
