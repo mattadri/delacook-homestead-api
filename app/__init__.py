@@ -33,20 +33,20 @@ def create_api(flask_app):
 
     api.route(CompostPileDetail, 'compost_pile_detail',
               '/compostpiles/<int:id>',
-              '/compostpilehistories/<int:compost_pile_history_id>/compost-pile')
+              '/compostpilehistories/<int:compost_pile_history_id>/compostpile')
 
     api.route(CompostPileRelationship, 'compost_pile_histories',
-              '/compostpiles/<int:id>/relationships/histories')
+              '/compostpiles/<int:id>/relationships/compostpilehistories')
 
     api.route(CompostPileHistoryList, 'compost_pile_history_list',
               '/compostpilehistories',
-              '/compostpiles/<int:id>/compost-pile-histories')
+              '/compostpiles/<int:id>/compostpilehistories')
 
     api.route(CompostPileHistoryDetail, 'compost_pile_history_detail',
               '/compostpilehistories/<int:id>')
 
     api.route(CompostPileHistoryRelationship, 'history_compost_pile',
-              '/compostpilehistories/<int:id>/relationships/compost_pile')
+              '/compostpilehistories/<int:id>/relationships/compostpile')
 
 
 def create_flask_app(environment_config):

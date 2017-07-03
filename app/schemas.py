@@ -55,10 +55,10 @@ class CompostPileSchema(Schema):
     finished = fields.Date()
     label = fields.Str(required=True)
     isactive = fields.Boolean(attribute='is_active')
-    compost_pile_histories = Relationship(
+    compostpilehistories = Relationship(
         self_view='compost_pile_histories',
         self_view_kwargs={'id': '<id>'},
-        related_view='compost_pile_histories_list',
+        related_view='compost_pile_history_list',
         related_view_kwargs={'id': '<id>'},
         many=True,
         schema='CompostHistorySchema',
@@ -70,6 +70,7 @@ class CompostHistorySchema(Schema):
         type_ = 'compostpilehistories'
         self_view = 'compost_pile_history_detail'
         self_view_kwargs = {'id': '<id>'}
+        self_view_many = 'compost_pile_history_list'
 
     id = fields.Str(dump_only=True)
     created = fields.Date()
