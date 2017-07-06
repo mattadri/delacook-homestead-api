@@ -9,35 +9,7 @@ from marshmallow_jsonapi.flask import Schema, Relationship
 from marshmallow_jsonapi import fields
 
 from app import db
-from app.models import CompostPile, CompostPileHistory
-from app.models import RainfallTotal
-
-
-# RAINFALL TOTALS
-class RainfallTotalSchema(Schema):
-    class Meta:
-        type_ = 'rainfalltotals'
-        self_view = 'rainfall_total_detail'
-        self_view_kwargs = {'id': '<id>'}
-        self_view_many = 'rainfall_total_list'
-
-    id = fields.Str(dump_only=True)
-    created = fields.Date()
-    modified = fields.Date()
-    date = fields.Date()
-    amount = fields.Float()
-
-
-class RainfallTotalList(ResourceList):
-    schema = RainfallTotalSchema
-    data_layer = {'session': db.session,
-                  'model': RainfallTotal}
-
-
-class RainfallTotalDetail(ResourceDetail):
-    schema = RainfallTotalSchema
-    data_layer = {'session': db.session,
-                  'model': RainfallTotal}
+from app.models.compost import CompostPile, CompostPileHistory
 
 
 # COMPOST PILES
