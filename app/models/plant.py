@@ -35,7 +35,7 @@ class LifeSpan(db.Model):
     name = db.Column(db.String, nullable=False)
 
 
-# TREE, SHRUB, FLOWER, GRASS
+# TREE, SHRUB, VEGETABLE, VINE, FLOWER
 class Type(db.Model):
     __tablename__ = 'types'
 
