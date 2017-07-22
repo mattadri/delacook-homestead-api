@@ -22,6 +22,7 @@ def create_api(flask_app):
     from app.schemas.plant import WoodTypeList, WoodTypeDetail, WoodTypeRelationship
     from app.schemas.plant import LifeSpanList, LifeSpanDetail, LifeSpanRelationship
     from app.schemas.plant import LeafCycleList, LeafCycleDetail, LeafCycleRelationship
+    from app.schemas.plant import PlantNoteList, PlantNoteDetail, PlantNoteRelationship
 
     api = Api(flask_app)
 
@@ -58,7 +59,8 @@ def create_api(flask_app):
               '/plants')
 
     api.route(PlantDetail, 'plant_detail',
-              '/plants/<int:id>')
+              '/plants/<int:id>',
+              '/plantnotes/<int:plant_note_id>/plant')
 
     api.route(PlantRelationship, 'plant_lifespan',
               '/plants/<int:id>/relationships/lifespans')
@@ -71,6 +73,9 @@ def create_api(flask_app):
 
     api.route(PlantRelationship, 'plant_leaf_cycle',
               '/plants/<int:id>/relationships/leafcycles')
+
+    api.route(PlantRelationship, 'plant_notes',
+              '/plants/<int:id>/relationships/notes')
 
     api.route(TypeList, 'type_list',
               '/types')
@@ -107,6 +112,16 @@ def create_api(flask_app):
 
     api.route(LeafCycleRelationship, 'leafcycle_plant',
               '/leafcycles/<int:id>/relationships/plants')
+
+    api.route(PlantNoteList, 'plantnote_list',
+              '/plantnotes',
+              '/plants/<int:id>/plantnotes')
+
+    api.route(PlantNoteDetail, 'plantnote_detail',
+              '/plantnotes/<int:id>')
+
+    api.route(PlantNoteRelationship, 'plantnote_plant',
+              '/plantnotes/<int:id>/relationships/plant')
 
 
 def create_flask_app(environment_config):

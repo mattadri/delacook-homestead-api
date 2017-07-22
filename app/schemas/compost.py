@@ -103,7 +103,7 @@ class CompostPileHistoryList(ResourceList):
             try:
                 self.session.query(CompostPile).filter_by(id=view_kwargs['id']).one()
             except NoResultFound:
-                raise ObjectNotFound({'parameter': 'id'}, "Person: {} not found".format(view_kwargs['id']))
+                raise ObjectNotFound({'parameter': 'id'}, "Compost Pile: {} not found".format(view_kwargs['id']))
             else:
                 query_ = query_.join(CompostPile).filter(CompostPile.id == view_kwargs['id'])
         return query_
