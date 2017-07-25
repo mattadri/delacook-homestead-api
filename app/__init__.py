@@ -23,6 +23,17 @@ def create_api(flask_app):
     from app.schemas.plant import LifeSpanList, LifeSpanDetail, LifeSpanRelationship
     from app.schemas.plant import LeafCycleList, LeafCycleDetail, LeafCycleRelationship
     from app.schemas.plant import PlantNoteList, PlantNoteDetail, PlantNoteRelationship
+    from app.schemas.plant import PlantingPhysicalSourceList, PlantingPhysicalSourceDetail, PlantingPhysicalSourceRelationship
+    from app.schemas.plant import PlantLineageList, PlantLineageDetail, PlantLineageRelationship
+    from app.schemas.plant import PlantGenerationList, PlantGenerationDetail, PlantGenerationRelationship
+    from app.schemas.plant import PlantLineageGenerationList, PlantLineageGenerationDetail, PlantLineageGenerationRelationship
+    from app.schemas.plant import PlantingList, PlantingDetail, PlantingRelationship
+    from app.schemas.plant import PlantingNotesList, PlantingNotesDetail, PlantingNotesRelationship
+    from app.schemas.plant import PlantGenerationSeedCollectionsList, PlantGenerationSeedCollectionsDetail, PlantGenerationSeedCollectionsRelationship
+    from app.schemas.plant import CloningList, CloningDetail, CloningRelationship
+    from app.schemas.plant import CloningNotesList, CloningNotesDetail, CloningNotesRelationship
+    from app.schemas.plant import PlantHarvestList, PlantHarvestDetail, PlantHarvestRelationship
+    from app.schemas.plant import PlantHarvestNotesList, PlantHarvestNotesDetail, PlantHarvestNotesRelationship
 
     api = Api(flask_app)
 
@@ -77,6 +88,9 @@ def create_api(flask_app):
     api.route(PlantRelationship, 'plant_notes',
               '/plants/<int:id>/relationships/notes')
 
+    api.route(PlantRelationship, 'plant_lineages',
+              '/plants/<int:id>/relationships/plantlineages')
+
     api.route(TypeList, 'type_list',
               '/types')
 
@@ -122,6 +136,118 @@ def create_api(flask_app):
 
     api.route(PlantNoteRelationship, 'plantnote_plant',
               '/plantnotes/<int:id>/relationships/plant')
+
+    api.route(PlantingPhysicalSourceList, 'plantingphysicalsource_list',
+              '/plantingphysicalsources')
+
+    api.route(PlantingPhysicalSourceDetail, 'plantingphysicalsource_detail',
+              '/plantingphysicalsources/<int:id>')
+
+    api.route(PlantingPhysicalSourceRelationship, 'plantingphysicalsource_plantlineage',
+              '/plantingphysicalsources/<int:id>/relationships/plantlineages')
+
+    api.route(PlantLineageList, 'plantlineage_list',
+              '/plantlineages',
+              '/plants/<int:id>/plantlineages')
+
+    api.route(PlantLineageDetail, 'plantlineage_detail',
+              '/plantlineages/<int:id>')
+
+    api.route(PlantLineageRelationship, 'plantlineage_plant',
+              '/plantlineages/<int:id>/relationships/plant')
+
+    api.route(PlantLineageRelationship, 'plantlineage_plantingphysicalsource',
+              '/plantlineages/<int:id>/relationships/plantingphysicalsource')
+
+    api.route(PlantGenerationList, 'plantgeneration_list',
+              '/plantgenerations')
+
+    api.route(PlantGenerationDetail, 'plantgeneration_detail',
+              '/plantgenerations/<int:id>')
+
+    api.route(PlantGenerationRelationship, 'plantgeneration_plantlineagegeneration',
+              '/plantgenerations/<int:id>/relationships/plantlineagegenerations')
+
+    api.route(PlantLineageGenerationList, 'plantlineagegeneration_list',
+              '/plantlineagegenerations')
+
+    api.route(PlantLineageGenerationDetail, 'plantlineagegeneration_detail',
+              '/plantlineagegenerations/<int:id>')
+
+    api.route(PlantLineageGenerationRelationship, 'plantlineagegeneration_plantlineage',
+              '/plantlineagegenerations/<int:id>/relationships/plantlineages')
+
+    api.route(PlantLineageGenerationRelationship, 'plantlineagegeneration_plantgeneration',
+              '/plantlineagegenerations/<int:id>/relationships/plantgeneration')
+
+    api.route(PlantingList, 'planting_list',
+              '/plantings')
+
+    api.route(PlantingDetail, 'planting_detail',
+              '/plantings/<int:id>')
+
+    api.route(PlantingRelationship, 'planting_plantgeneration',
+              '/plantings/<int:id>/relationships/plantgenerations')
+
+    api.route(PlantingRelationship, 'planting_plantingphysicalsource',
+              '/plantings/<int:id>/relationships/plantingphysicalsource')
+
+    api.route(PlantingNotesList, 'plantingnote_list',
+              '/plantingnotes')
+
+    api.route(PlantingNotesDetail, 'plantingnote_detail',
+              '/plantingnotes/<int:id>')
+
+    api.route(PlantingNotesRelationship, 'plantingnote_planting',
+              '/plantingnotes/<int:id>/relationships/planting')
+
+    api.route(PlantGenerationSeedCollectionsList, 'plantgenerationseedcollection_list',
+              '/plantgenerationseedcollections')
+
+    api.route(PlantGenerationSeedCollectionsDetail, 'plantgenerationseedcollection_detail',
+              '/plantgenerationseedcollections/<int:id>')
+
+    api.route(PlantGenerationSeedCollectionsRelationship, 'plantgenerationseedcollection_plantgeneration',
+              '/plantgenerationseedcollections/<int:id>/relationships/plantgenerations')
+
+    api.route(CloningList, 'cloning_list',
+              '/clonings')
+
+    api.route(CloningDetail, 'cloning_detail',
+              '/clonings/<int:id>')
+
+    api.route(CloningRelationship, 'cloning_plantgeneration',
+              '/clonings/<int:id>/relationships/plantgenerations')
+
+    api.route(CloningRelationship, 'cloning_plantingphysicalsource',
+              '/clonings/<int:id>/relationships/plantingphysicalsource')
+
+    api.route(CloningNotesList, 'cloningnote_list',
+              '/cloningnotes')
+
+    api.route(CloningNotesDetail, 'cloningnote_detail',
+              '/cloningnotes/<int:id>')
+
+    api.route(CloningNotesRelationship, 'cloningnote_cloning',
+              '/cloningnotes/<int:id>/relationships/cloning')
+
+    api.route(PlantHarvestList, 'plantharvest_list',
+              '/plantharvests')
+
+    api.route(PlantHarvestDetail, 'plantharvest_detail',
+              '/plantharvests/<int:id>')
+
+    api.route(PlantHarvestRelationship, 'harvest_plantgeneration',
+              '/plantharvests/<int:id>/relationships/plantgeneration')
+
+    api.route(PlantHarvestNotesList, 'plantharvestnote_list',
+              '/plantharvestnotes')
+
+    api.route(PlantHarvestNotesDetail, 'plantharvestnote_detail',
+              '/plantharvestnotes/<int:id>')
+
+    api.route(PlantHarvestNotesRelationship, 'harvestnote_harvest',
+              '/plantharvestnotes/<int:id>/relationships/plantharvest')
 
 
 def create_flask_app(environment_config):
