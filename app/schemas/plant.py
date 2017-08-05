@@ -48,7 +48,6 @@ class PlantSchema(Schema):
         self_view_kwargs={'id': '<id>'},
         related_view='woodtype_detail',
         related_view_kwargs={'id': '<id>'},
-        many=False,
         schema='WoodTypeSchema',
         type_='woodtypes')
     lifespans = Relationship(
@@ -57,7 +56,6 @@ class PlantSchema(Schema):
         self_view_kwargs={'id': '<id>'},
         related_view='lifespan_detail',
         related_view_kwargs={'id': '<id>'},
-        many=False,
         schema='LifespanSchema',
         type_='lifespans')
     leafcycles = Relationship(
@@ -66,7 +64,6 @@ class PlantSchema(Schema):
         self_view_kwargs={'id': '<id>'},
         related_view='leafcycle_detail',
         related_view_kwargs={'id': '<id>'},
-        many=False,
         schema='LeafCycleSchema',
         type_='leafcycles')
     plantnotes = Relationship(
@@ -230,6 +227,14 @@ class PlantLineageSchema(Schema):
         related_view_kwargs={'id': '<id>'},
         schema='PlantingPhysicalSourceSchema',
         type_='plantingphysicalsources')
+    lineagegenerations = Relationship(
+        self_view='plant_lineagegenerations',
+        self_view_kwargs={'id': '<id>'},
+        related_view='plantlineagegeneration_list',
+        related_view_kwargs={'id': '<id>'},
+        many=True,
+        schema='PlantLineageGenerationSchema',
+        type_='plantlineagegenerations')
 
 
 class PlantingPhysicalSourceSchema(Schema):
@@ -256,6 +261,14 @@ class PlantGenerationSchema(Schema):
     id = fields.Str(dump_only=True)
     created = fields.Date()
     modified = fields.Date()
+    plantings = Relationship(
+        self_view='plantgeneration_plantings',
+        self_view_kwargs={'id': '<id>'},
+        related_view='planting_list',
+        related_view_kwargs={'id': '<id>'},
+        many=True,
+        schema='PlantingSchema',
+        type_='plantings')
 
 
 class PlantGenerationSeedCollectionSchema(Schema):

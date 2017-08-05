@@ -159,14 +159,17 @@ def create_api(flask_app):
     api.route(PlantLineageRelationship, 'plantlineage_plantingphysicalsource',
               '/plantlineages/<int:id>/relationships/plantingphysicalsource')
 
+    api.route(PlantLineageRelationship, 'plant_lineagegenerations',
+              '/plantlineages/<int:id>/relationships/plantlineagegenerations')
+
     api.route(PlantGenerationList, 'plantgeneration_list',
               '/plantgenerations')
 
     api.route(PlantGenerationDetail, 'plantgeneration_detail',
               '/plantgenerations/<int:id>')
 
-    api.route(PlantGenerationRelationship, 'plantgeneration_plantlineagegeneration',
-              '/plantgenerations/<int:id>/relationships/plantlineagegenerations')
+    api.route(PlantGenerationRelationship, 'plantgeneration_plantings',
+              '/plantgenerations/<int:id>/relationships/plantings')
 
     api.route(PlantLineageGenerationList, 'plantlineagegeneration_list',
               '/plantlineagegenerations')
