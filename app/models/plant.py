@@ -76,7 +76,7 @@ class PlantNote(db.Model):
     plant = db.relationship('Plant', backref=db.backref('plantnotes'))
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-    note_date = db.Column(db.DateTime)
+    note_date = db.Column(db.DateTime, default=db.func.current_timestamp())
     note = db.Column(db.Text)
 
 
