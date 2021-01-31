@@ -3,29 +3,29 @@ from marshmallow_jsonapi import fields
 from marshmallow_jsonapi.flask import Schema
 
 from app import db
-from app.models.plant.soil import Soil
+from app.models.note import Note
 
 
-class SoilSchema(Schema):
+class NoteSchema(Schema):
     class Meta:
-        type_ = 'soil'
-        self_view = 'soil_detail'
+        type_ = 'note'
+        self_view = 'note_detail'
         self_view_kwargs = {'id': '<id>'}
-        self_view_many = 'soil_list'
+        self_view_many = 'note_list'
 
     id = fields.Str(dump_only=True)
     created = fields.Date()
     modified = fields.Date()
-    label = fields.String(required=True)
+    text = fields.String(required=True)
 
 
-class SoilList(ResourceList):
-    schema = SoilSchema
+class NoteList(ResourceList):
+    schema = NoteSchema
     data_layer = {'session': db.session,
-                  'model': Soil}
+                  'model': Note}
 
 
-class SoilDetail(ResourceDetail):
-    schema = SoilSchema
+class NoteDetail(ResourceDetail):
+    schema = NoteSchema
     data_layer = {'session': db.session,
-                  'model': Soil}
+                  'model': Note}

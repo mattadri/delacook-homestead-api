@@ -3,15 +3,15 @@ from marshmallow_jsonapi import fields
 from marshmallow_jsonapi.flask import Schema
 
 from app import db
-from app.models.plant.soil import Soil
+from app.models.plant.growth_habit import GrowthHabit
 
 
-class SoilSchema(Schema):
+class GrowthHabitSchema(Schema):
     class Meta:
-        type_ = 'soil'
-        self_view = 'soil_detail'
+        type_ = 'growth_habit'
+        self_view = 'growth_habit_detail'
         self_view_kwargs = {'id': '<id>'}
-        self_view_many = 'soil_list'
+        self_view_many = 'growth_habit_list'
 
     id = fields.Str(dump_only=True)
     created = fields.Date()
@@ -19,13 +19,13 @@ class SoilSchema(Schema):
     label = fields.String(required=True)
 
 
-class SoilList(ResourceList):
-    schema = SoilSchema
+class GrowthHabitList(ResourceList):
+    schema = GrowthHabitSchema
     data_layer = {'session': db.session,
-                  'model': Soil}
+                  'model': GrowthHabit}
 
 
-class SoilDetail(ResourceDetail):
-    schema = SoilSchema
+class GrowthHabitDetail(ResourceDetail):
+    schema = GrowthHabitSchema
     data_layer = {'session': db.session,
-                  'model': Soil}
+                  'model': GrowthHabit}

@@ -1,11 +1,9 @@
 from flask_rest_jsonapi import ResourceDetail, ResourceList
-
-from marshmallow_jsonapi.flask import Schema
 from marshmallow_jsonapi import fields
+from marshmallow_jsonapi.flask import Schema
 
 from app import db
-
-from app.models.lifespan import Lifespan
+from app.models.plant.lifespan import Lifespan
 
 
 class LifespanSchema(Schema):
