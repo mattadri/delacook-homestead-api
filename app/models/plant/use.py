@@ -8,3 +8,4 @@ class Use(db.Model):
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
     text = db.Column(db.Text)
+    is_primary = db.Column(db.Boolean)

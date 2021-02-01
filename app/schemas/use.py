@@ -17,6 +17,7 @@ class UseSchema(Schema):
     created = fields.Date()
     modified = fields.Date()
     text = fields.String(required=True)
+    is_primary = fields.Boolean(default=False)
 
 
 class UseList(ResourceList):

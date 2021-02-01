@@ -16,8 +16,7 @@ class MeasurementUnitSchema(Schema):
     id = fields.Str(dump_only=True)
     created = fields.Date()
     modified = fields.Date()
-    label_singular = fields.String(required=True)
-    label_plural = fields.String(required=True)
+    label = fields.String(required=True)
 
 
 class MeasurementUnitList(ResourceList):
