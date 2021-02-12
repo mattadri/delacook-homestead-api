@@ -16,7 +16,17 @@ def create_api(flask_app):
 
     from app.schemas.garden import GardenList, GardenDetail, GardenBedList, GardenBedDetail
     from app.schemas.bed import BedList, BedDetail, BedPlantList, BedPlantDetail
+
     from app.schemas.plant import PlantList, PlantDetail
+    from app.schemas.plant import PlantNoteList, PlantNoteDetail
+    from app.schemas.plant import PlantLightRequirementList, PlantLightRequirementDetail
+    from app.schemas.plant import PlantLightRequirementNoteList, PlantLightRequirementNoteDetail
+    from app.schemas.plant import PlantWaterRequirementList, PlantWaterRequirementDetail
+    from app.schemas.plant import PlantWaterRequirementNoteList, PlantWaterRequirementNoteDetail
+    from app.schemas.plant import PlantUseList, PlantUseDetail
+    from app.schemas.plant import PlantSeasonList, PlantSeasonDetail
+    from app.schemas.plant import PlantPropagationList, PlantPropagationDetail
+
     from app.schemas.plant_child import PlantChildList, PlantChildDetail
     from app.schemas.lifespan import LifespanList, LifespanDetail
     from app.schemas.soil import SoilList, SoilDetail
@@ -85,6 +95,32 @@ def create_api(flask_app):
 
     api.route(PlantList, 'plant_list', '/plants')
     api.route(PlantDetail, 'plant_detail', '/plants/<int:id>')
+
+    api.route(PlantNoteList, 'plant_note_list', '/plant_notes')
+    api.route(PlantNoteDetail, 'plant_note_detail', '/plant_notes/<int:id>')
+
+    api.route(PlantUseList, 'plant_use_list', '/plant_uses')
+    api.route(PlantUseDetail, 'plant_use_detail', '/plant_uses/<int:id>')
+
+    api.route(PlantSeasonList, 'plant_season_list', '/plant_seasons')
+    api.route(PlantSeasonDetail, 'plant_season_detail', '/plant_seasons/<int:id>')
+
+    api.route(PlantPropagationList, 'plant_propagation_list', '/plant_propagations')
+    api.route(PlantPropagationDetail, 'plant_propagation_detail', '/plant_propagations/<int:id>')
+
+    api.route(PlantLightRequirementList, 'plant_light_requirement_list', '/plant_light_requirements')
+    api.route(PlantLightRequirementDetail, 'plant_light_requirement_detail', '/plant_light_requirements/<int:id>')
+
+    api.route(PlantLightRequirementNoteList, 'plant_light_requirement_note_list', '/plant_light_requirement_notes')
+    api.route(PlantLightRequirementNoteDetail,
+              'plant_light_requirement_note_detail', '/plant_light_requirement_notes/<int:id>')
+
+    api.route(PlantWaterRequirementList, 'plant_water_requirement_list', '/plant_water_requirements')
+    api.route(PlantWaterRequirementDetail, 'plant_water_requirement_detail', '/plant_water_requirements/<int:id>')
+
+    api.route(PlantWaterRequirementNoteList, 'plant_water_requirement_note_list', '/plant_water_requirement_notes')
+    api.route(PlantWaterRequirementNoteDetail,
+              'plant_water_requirement_note_detail', '/plant_water_requirement_notes/<int:id>')
 
     api.route(PlantChildList, 'plant_child_list', '/plant_children')
     api.route(PlantChildDetail, 'plant_child_detail', '/plant_children/<int:id>')

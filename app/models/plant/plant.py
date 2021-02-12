@@ -19,6 +19,7 @@ class Plant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
     common_name = db.Column(db.String)
     description = db.Column(db.Text)
     sub_species = db.Column(db.String, unique=True)
@@ -75,14 +76,17 @@ class PlantLightRequirement(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_light_requirement'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('light_requirement_plant_parent', cascade='all,delete'))
 
     light_requirement_fk = db.Column(db.Integer, db.ForeignKey('light_requirement.id'))
     light_requirement = db.relationship(
         LightRequirement,
         foreign_keys=[light_requirement_fk],
         backref=db.backref('plant_light_requirement'))
-    light_requirement_rel = db.relationship(LightRequirement, foreign_keys=[light_requirement_fk])
+    light_requirement_rel = db.relationship(
+        LightRequirement,
+        foreign_keys=[light_requirement_fk], backref=db.backref('light_requirement_parent', cascade='all,delete'))
 
 
 class PlantLightRequirementNote(db.Model):
@@ -93,12 +97,18 @@ class PlantLightRequirementNote(db.Model):
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     plant_light_requirement_fk = db.Column(db.Integer, db.ForeignKey('plant_light_requirement.id'))
-    plant_light_requirement = db.relationship('PlantLightRequirement', foreign_keys=[plant_light_requirement_fk], backref=db.backref('plant_light_requirement_note'))
-    plant_light_requirement_rel = db.relationship('PlantLightRequirement', foreign_keys=[plant_light_requirement_fk])
+    plant_light_requirement = db.relationship(
+        'PlantLightRequirement',
+        foreign_keys=[plant_light_requirement_fk], backref=db.backref('plant_light_requirement_note'))
+    plant_light_requirement_rel = db.relationship(
+        'PlantLightRequirement',
+        foreign_keys=[plant_light_requirement_fk],
+        backref=db.backref('plant_light_requirement_parent', cascade='all,delete'))
 
     note_fk = db.Column(db.Integer, db.ForeignKey('note.id'))
     note = db.relationship(Note, foreign_keys=[note_fk], backref=db.backref('plant_light_requirement_note'))
-    note_rel = db.relationship(Note, foreign_keys=[note_fk])
+    note_rel = db.relationship(
+        Note, foreign_keys=[note_fk], backref=db.backref('light_requirement_note_parent', cascade='all,delete'))
 
 
 class PlantWaterRequirement(db.Model):
@@ -110,14 +120,17 @@ class PlantWaterRequirement(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_water_requirement'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('water_requirement_plant_parent', cascade='all,delete'))
 
     water_requirement_fk = db.Column(db.Integer, db.ForeignKey('water_requirement.id'))
     water_requirement = db.relationship(
         WaterRequirement,
         foreign_keys=[water_requirement_fk],
         backref=db.backref('plant_water_requirement'))
-    water_requirement_rel = db.relationship(WaterRequirement, foreign_keys=[water_requirement_fk])
+    water_requirement_rel = db.relationship(
+        WaterRequirement,
+        foreign_keys=[water_requirement_fk], backref=db.backref('water_requirement_parent', cascade='all,delete'))
 
 
 class PlantWaterRequirementNote(db.Model):
@@ -128,12 +141,17 @@ class PlantWaterRequirementNote(db.Model):
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     plant_water_requirement_fk = db.Column(db.Integer, db.ForeignKey('plant_water_requirement.id'))
-    plant_water_requirement = db.relationship('PlantWaterRequirement', foreign_keys=[plant_water_requirement_fk], backref=db.backref('plant_water_requirement_note'))
-    plant_water_requirement_rel = db.relationship('PlantWaterRequirement', foreign_keys=[plant_water_requirement_fk])
+    plant_water_requirement = db.relationship(
+        'PlantWaterRequirement',
+        foreign_keys=[plant_water_requirement_fk], backref=db.backref('plant_water_requirement_note'))
+    plant_water_requirement_rel = db.relationship(
+        'PlantWaterRequirement',
+        foreign_keys=[plant_water_requirement_fk],
+        backref=db.backref('plant_water_requirement_parent', cascade='all,delete'))
 
     note_fk = db.Column(db.Integer, db.ForeignKey('note.id'))
     note = db.relationship('Note', foreign_keys=[note_fk], backref=db.backref('plant_water_requirement_note'))
-    note_rel = db.relationship('Note', foreign_keys=[note_fk])
+    note_rel = db.relationship('Note', foreign_keys=[note_fk], backref=db.backref('water_requirement_note_parent', cascade='all,delete'))
 
 
 class PlantUse(db.Model):
@@ -145,11 +163,12 @@ class PlantUse(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_use'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('use_plant_parent', cascade='all,delete'))
 
     use_fk = db.Column(db.Integer, db.ForeignKey('use.id'))
     use = db.relationship(Use, foreign_keys=[use_fk], backref=db.backref('plant_use'))
-    use_rel = db.relationship(Use, foreign_keys=[use_fk])
+    use_rel = db.relationship(Use, foreign_keys=[use_fk], backref=db.backref('use_parent', cascade='all,delete'))
 
 
 class PlantSeason(db.Model):
@@ -161,11 +180,13 @@ class PlantSeason(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_season'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('season_plant_parent', cascade='all,delete'))
 
     season_fk = db.Column(db.Integer, db.ForeignKey('season.id'))
     season = db.relationship(Season, foreign_keys=[season_fk], backref=db.backref('plant_season'))
-    season_rel = db.relationship(Season, foreign_keys=[season_fk])
+    season_rel = db.relationship(
+        Season, foreign_keys=[season_fk], backref=db.backref('season_parent', cascade='all,delete'))
 
 
 class PlantNote(db.Model):
@@ -177,11 +198,12 @@ class PlantNote(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_note'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('note_plant_parent', cascade='all,delete'))
 
     note_fk = db.Column(db.Integer, db.ForeignKey('note.id'))
     note = db.relationship(Note, foreign_keys=[note_fk], backref=db.backref('plant_note'))
-    note_rel = db.relationship(Note, foreign_keys=[note_fk])
+    note_rel = db.relationship(Note, foreign_keys=[note_fk], backref=db.backref('note_parent', cascade='all,delete'))
 
 
 class PlantPropagation(db.Model):
@@ -195,4 +217,5 @@ class PlantPropagation(db.Model):
 
     plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
     plant = db.relationship('Plant', foreign_keys=[plant_fk], backref=db.backref('plant_propagation'))
-    plant_rel = db.relationship('Plant', foreign_keys=[plant_fk])
+    plant_rel = db.relationship(
+        'Plant', foreign_keys=[plant_fk], backref=db.backref('propagation_plant_parent', cascade='all,delete'))
