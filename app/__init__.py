@@ -1,13 +1,20 @@
 import os
 
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+
+import uuid
+
+import boto3
 
 # local config import
 from instance.config import app_config
 
 db = SQLAlchemy()
+
+s3 = boto3.client('s3')
+s3_bucket = 'homestead.plants'
 
 
 # noinspection PyTypeChecker
@@ -152,3 +159,18 @@ def create_app(environment_config):
 
 config_name = os.getenv('APP_SETTINGS')
 application = create_app(config_name)
+
+
+@application.route("/upload_plant_image", methods=['POST', 'GET'])
+def upload():
+    print(request)
+
+    s3_filename = str(uuid.uuid4())
+
+    file = request.files['image']
+
+    s3.upload_fileobj(file, s3_bucket, s3_filename, ExtraArgs={'ACL': 'public-read', 'ContentType': file.content_type})
+
+    endpoint = 'https://s3.amazonaws.com/homestead.plants/' + s3_filename
+
+    return endpoint

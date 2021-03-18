@@ -22,7 +22,7 @@ class Plant(db.Model):
 
     common_name = db.Column(db.String)
     description = db.Column(db.Text)
-    sub_species = db.Column(db.String, unique=True)
+    sub_species = db.Column(db.String)
     image_uri = db.Column(db.String)
 
     frost_tolerant = db.Column(db.Boolean, default=False)

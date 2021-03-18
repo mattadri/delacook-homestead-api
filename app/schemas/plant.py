@@ -52,13 +52,13 @@ class PlantSchema(Schema):
     species_rel = Relationship(
         schema='SpeciesSchema',
         type_='species',
-        required=True
+        required=False
     )
 
     category_rel = Relationship(
         schema='CategorySchema',
         type_='category',
-        required=True
+        required=False
     )
 
     height_unit_rel = Relationship(
