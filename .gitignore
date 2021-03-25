@@ -3,3 +3,7 @@ __pycache__
 venv
 app/__pycache__
 *.pyc
+bin/
+lib64
+lib/
+pyvenv.cfg
