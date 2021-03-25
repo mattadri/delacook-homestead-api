@@ -20,13 +20,15 @@ class Plant(db.Model):
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+    is_variety = db.Column(db.Boolean, default=False)
+
     common_name = db.Column(db.String)
     description = db.Column(db.Text)
     sub_species = db.Column(db.String)
     image_uri = db.Column(db.String)
 
-    frost_tolerant = db.Column(db.Boolean, default=False)
-    drought_tolerant = db.Column(db.Boolean, default=False)
+    frost_tolerant = db.Column(db.Integer)
+    drought_tolerant = db.Column(db.Integer)
 
     soil_ph_low = db.Column(db.Integer)
     soil_ph_high = db.Column(db.Integer)
@@ -65,6 +67,12 @@ class Plant(db.Model):
     growth_habit_fk = db.Column(db.Integer, db.ForeignKey('growth_habit.id'))
     growth_habit = db.relationship(GrowthHabit, foreign_keys=[growth_habit_fk], backref=db.backref('plant'))
     growth_habit_rel = db.relationship(GrowthHabit, foreign_keys=[growth_habit_fk])
+
+    variety_plant_fk = db.Column(db.Integer, db.ForeignKey('plant.id'))
+    variety_plant = db.relationship('Plant', foreign_keys=[variety_plant_fk], remote_side=[id])
+    variety_plant_rel = db.relationship('Plant', foreign_keys=[variety_plant_fk], remote_side=[id])
+
+    plant_variety = db.relationship('Plant', foreign_keys=[variety_plant_fk], remote_side=[variety_plant_fk])
 
 
 class PlantLightRequirement(db.Model):

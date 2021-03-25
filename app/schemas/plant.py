@@ -19,13 +19,15 @@ class PlantSchema(Schema):
     created = fields.Date()
     modified = fields.Date()
 
+    is_variety = fields.Boolean()
+
     common_name = fields.String(required=True)
     description = fields.String()
     sub_species = fields.String()
     image_uri = fields.String()
 
-    frost_tolerant = fields.Boolean()
-    drought_tolerant = fields.Boolean()
+    frost_tolerant = fields.Integer()
+    drought_tolerant = fields.Integer()
 
     soil_ph_high = fields.Integer()
     soil_ph_low = fields.Integer()
@@ -42,12 +44,18 @@ class PlantSchema(Schema):
     soil_fertility = fields.Nested('SoilFertilitySchema')
     growth_habit = fields.Nested('GrowthHabitSchema')
 
+    # if a variety returns the parent plant
+    variety_plant = fields.Nested('PlantSchema')
+
     plant_note = fields.Nested('PlantNoteSchema', many=True, exclude=('plant',))
     plant_use = fields.Nested('PlantUseSchema', many=True, exclude=('plant',))
     plant_season = fields.Nested('PlantSeasonSchema', many=True, exclude=('plant',))
     plant_propagation = fields.Nested('PlantPropagationSchema', many=True, exclude=('plant',))
     plant_light_requirement = fields.Nested('PlantLightRequirementSchema', many=True, exclude=('plant',))
     plant_water_requirement = fields.Nested('PlantWaterRequirementSchema', many=True, exclude=('plant',))
+
+    # gets the varieties under a parent plant
+    plant_variety = fields.Nested('PlantSchema', many=True, exclude=('variety_plant',))
 
     species_rel = Relationship(
         schema='SpeciesSchema',
@@ -94,6 +102,12 @@ class PlantSchema(Schema):
     growth_habit_rel = Relationship(
         schema='GrowthHabitSchema',
         type_='growth_habit',
+        required=False
+    )
+
+    variety_plant_rel = Relationship(
+        schema='PlantSchema',
+        type_='plant',
         required=False
     )
 
