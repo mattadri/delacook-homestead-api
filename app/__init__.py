@@ -14,7 +14,6 @@ from instance.config import app_config
 db = SQLAlchemy()
 
 s3 = boto3.client('s3')
-s3_bucket = 'homestead.plants'
 
 
 # noinspection PyTypeChecker
@@ -160,17 +159,17 @@ def create_app(environment_config):
 config_name = os.getenv('APP_SETTINGS')
 application = create_app(config_name)
 
+s3_bucket = os.getenv('S3_BUCKET')
+
 
 @application.route("/upload_plant_image", methods=['POST', 'GET'])
 def upload():
-    print(request)
-
     s3_filename = str(uuid.uuid4())
 
     file = request.files['image']
 
     s3.upload_fileobj(file, s3_bucket, s3_filename, ExtraArgs={'ACL': 'public-read', 'ContentType': file.content_type})
 
-    endpoint = 'https://s3.amazonaws.com/homestead.plants/' + s3_filename
+    endpoint = 'https://s3.amazonaws.com/' + s3_bucket + '/' + s3_filename
 
     return endpoint
